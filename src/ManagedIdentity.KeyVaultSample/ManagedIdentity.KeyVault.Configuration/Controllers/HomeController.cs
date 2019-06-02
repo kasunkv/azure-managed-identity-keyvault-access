@@ -1,8 +1,9 @@
-﻿using ManagedIdentity.KeyVault.Configuration.Models;
+﻿using ManagedIdentity.KeyVault.Secrets.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
-namespace ManagedIdentity.KeyVault.Configuration.Controllers
+namespace ManagedIdentity.KeyVault.Secrets.Controllers
 {
     public class HomeController : Controller
     {
@@ -31,7 +32,7 @@ namespace ManagedIdentity.KeyVault.Configuration.Controllers
 
         public IActionResult Error()
         {
-            return View();
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

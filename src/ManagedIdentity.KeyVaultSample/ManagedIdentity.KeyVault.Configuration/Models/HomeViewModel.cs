@@ -1,4 +1,4 @@
-﻿namespace ManagedIdentity.KeyVault.Configuration.Models
+﻿namespace ManagedIdentity.KeyVault.Secrets.Models
 {
     public class HomeViewModel
     {

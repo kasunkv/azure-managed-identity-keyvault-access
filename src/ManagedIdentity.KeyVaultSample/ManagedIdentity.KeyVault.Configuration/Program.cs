@@ -5,7 +5,7 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 
-namespace ManagedIdentity.KeyVault.Configuration
+namespace ManagedIdentity.KeyVault.Secrets
 {
     public class Program
     {
