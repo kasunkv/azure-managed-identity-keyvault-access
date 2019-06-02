@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
 
 namespace ManagedIdentity.KeyVault.Configuration
 {
@@ -19,6 +16,20 @@ namespace ManagedIdentity.KeyVault.Configuration
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((ctx, config) =>
+                {
+                    if (ctx.HostingEnvironment.IsProduction())
+                    {
+                        var configRoot = config.Build();
+                        var tokenProvider = new AzureServiceTokenProvider();
+
+                        config.AddAzureKeyVault(
+                            $"https://{configRoot["AppSettings:KeyVaultName"]}.vault.azure.net/",
+                            new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback)),
+                            new DefaultKeyVaultSecretManager());
+                    }
+
+                })
                 .UseStartup<Startup>();
     }
 }
