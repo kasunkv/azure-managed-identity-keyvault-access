@@ -1,0 +1,18 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Azure Key Vault</h1>
+        @if (!Model.IsError)
+        {
+            <p class="lead"><b>Secret Value: </b>@Model.SecretValue</p>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.ErrorMessage
+            </div>
+        }
+    </div>
