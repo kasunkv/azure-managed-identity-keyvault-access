@@ -24,12 +24,18 @@ namespace ManagedIdentity.KeyVault.Secrets.Controllers
             var secretName = _configuration["AppSettings:SecretName"];
 
             var vm = new HomeViewModel();
-            var tokenProvider = new AzureServiceTokenProvider();
 
             try
             {
+
+                // Creating the Key Vault client
+                var tokenProvider = new AzureServiceTokenProvider();
                 var vaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
+
+                // Get the secret
                 var secret = await vaultClient.GetSecretAsync($"https://{vaultName}.vault.azure.net/secrets/{secretName}");
+
+
 
                 vm.SecretValue = secret.Value;
             }
